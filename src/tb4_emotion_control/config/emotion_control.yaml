@@ -1,0 +1,34 @@
+emotion_detector:
+  ros__parameters:
+    backend: auto              # auto (hsemotion > deepface > ferplus) | hsemotion | deepface | fer | ferplus | none
+    calibration_file: ~/.ros/tb4_emotion_calibration.yaml   # from emotion_calibrate; "" disables
+    model_path: ""             # ONNX override for ferplus/hsemotion; default share/tb4_emotion_control/models
+    camera_source: "0"         # webcam index or a video file path
+    frame_width: 640
+    frame_height: 480
+    mirror: true               # selfie view: your left is the robot's left on screen
+    show_window: true
+    detector_backend: opencv   # DeepFace face detector: opencv (fast) | ssd | mediapipe | retinaface
+    min_face_confidence: 0.5
+    use_mtcnn: false           # FER only
+    # temporal filtering (see smoother.py)
+    ema_alpha: 0.35
+    min_confidence: 0.40
+    hold_time: 0.6
+    face_lost_timeout: 1.0
+    publish_rate: 10.0
+
+emotion_motion:
+  ros__parameters:
+    cmd_vel_topic: /cmd_vel
+    cmd_vel_stamped: false     # TurtleBot 4 on Jazzy (sim and Create 3) takes geometry_msgs/Twist
+    control_rate: 20.0
+    arc_linear: 0.15           # happy / sad: v = 0.15 m/s, |w| = 0.5 rad/s -> radius 0.30 m
+    arc_angular: 0.5
+    nudge_speed: 0.10          # angry / fear: 0.15 m at 0.10 m/s
+    nudge_distance: 0.15
+    spin_speed: 1.0            # surprise: 2*pi rad at 1.0 rad/s
+    use_odom: true
+    odom_timeout: 0.5
+    input_timeout: 1.0         # no /emotion/label for 1 s -> stop
+    one_shot_timeout_factor: 2.5

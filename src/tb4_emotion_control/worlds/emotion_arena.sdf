@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<!-- Open floor with a 1 m grid so the emotion trajectories are easy to read. -->
+<sdf version="1.9">
+  <world name="emotion_arena">
+    <physics name="3ms" type="ode">
+      <max_step_size>0.003</max_step_size>
+      <real_time_update_rate>333.0</real_time_update_rate>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+
+    <scene>
+      <ambient>0.55 0.55 0.55 1</ambient>
+      <background>0.75 0.8 0.85 1</background>
+      <grid>false</grid>
+    </scene>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>1.0 1.0 1.0 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>0.15 0.45 -0.88</direction>
+    </light>
+
+    <!-- fill light from the demo camera side so the dark TurtleBot shell reads well -->
+    <light type="point" name="fill">
+      <cast_shadows>false</cast_shadows>
+      <pose>-0.25 -1.6 1.8 0 0 0</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <attenuation><range>10</range><constant>0.4</constant><linear>0.05</linear><quadratic>0.01</quadratic></attenuation>
+    </light>
+
+    <model name="ground">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>20 20</size></plane></geometry>
+        </collision>
+        <visual name="floor">
+          <geometry><plane><normal>0 0 1</normal><size>20 20</size></plane></geometry>
+          <material><ambient>0.62 0.66 0.70 1</ambient><diffuse>0.62 0.66 0.70 1</diffuse></material>
+        </visual>
+        <!-- 1 m grid, -4 .. 4 m -->
+        <visual name="gx_m4"><pose>-4 0 0.001 0 0 0</pose><geometry><box><size>0.01 8 0.001</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+        <visual name="gx_m3"><pose>-3 0 0.001 0 0 0</pose><geometry><box><size>0.01 8 0.001</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+        <visual name="gx_m2"><pose>-2 0 0.001 0 0 0</pose><geometry><box><size>0.01 8 0.001</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+        <visual name="gx_m1"><pose>-1 0 0.001 0 0 0</pose><geometry><box><size>0.01 8 0.001</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+        <visual name="gx_0"><pose>0 0 0.001 0 0 0</pose><geometry><box><size>0.02 8 0.001</size></box></geometry><material><diffuse>0.2 0.6 0.2 1</diffuse></material></visual>
+        <visual name="gx_1"><pose>1 0 0.001 0 0 0</pose><geometry><box><size>0.01 8 0.001</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+        <visual name="gx_2"><pose>2 0 0.001 0 0 0</pose><geometry><box><size>0.01 8 0.001</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+        <visual name="gx_3"><pose>3 0 0.001 0 0 0</pose><geometry><box><size>0.01 8 0.001</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+        <visual name="gx_4"><pose>4 0 0.001 0 0 0</pose><geometry><box><size>0.01 8 0.001</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+        <visual name="gy_m4"><pose>0 -4 0.001 0 0 0</pose><geometry><box><size>8 0.01 0.001</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+        <visual name="gy_m3"><pose>0 -3 0.001 0 0 0</pose><geometry><box><size>8 0.01 0.001</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+        <visual name="gy_m2"><pose>0 -2 0.001 0 0 0</pose><geometry><box><size>8 0.01 0.001</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+        <visual name="gy_m1"><pose>0 -1 0.001 0 0 0</pose><geometry><box><size>8 0.01 0.001</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+        <visual name="gy_0"><pose>0 0 0.001 0 0 0</pose><geometry><box><size>8 0.02 0.001</size></box></geometry><material><diffuse>0.7 0.2 0.2 1</diffuse></material></visual>
+        <visual name="gy_1"><pose>0 1 0.001 0 0 0</pose><geometry><box><size>8 0.01 0.001</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+        <visual name="gy_2"><pose>0 2 0.001 0 0 0</pose><geometry><box><size>8 0.01 0.001</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+        <visual name="gy_3"><pose>0 3 0.001 0 0 0</pose><geometry><box><size>8 0.01 0.001</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+        <visual name="gy_4"><pose>0 4 0.001 0 0 0</pose><geometry><box><size>8 0.01 0.001</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+      </link>
+    </model>
+    <!-- Two fixed cameras used to record the demo video (rendered offscreen). -->
+    <model name="demo_camera_perspective">
+      <static>true</static>
+      <pose>-0.25 -1.95 1.55 0 0.6 1.5708</pose>
+      <link name="link">
+        <sensor name="camera" type="camera">
+          <camera>
+            <horizontal_fov>1.05</horizontal_fov>
+            <image><width>960</width><height>540</height></image>
+            <clip><near>0.05</near><far>50</far></clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>15</update_rate>
+          <topic>/demo_cam/perspective</topic>
+        </sensor>
+      </link>
+    </model>
+    <model name="demo_camera_top">
+      <static>true</static>
+      <pose>-0.25 0.45 3.4 0 1.5708 1.5708</pose>
+      <link name="link">
+        <sensor name="camera" type="camera">
+          <camera>
+            <horizontal_fov>0.62</horizontal_fov>
+            <image><width>1000</width><height>1000</height></image>
+            <clip><near>0.05</near><far>50</far></clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>10</update_rate>
+          <topic>/demo_cam/top</topic>
+        </sensor>
+      </link>
+    </model>
+  </world>
+</sdf>
